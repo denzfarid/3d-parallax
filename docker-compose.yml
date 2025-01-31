@@ -1,0 +1,27 @@
+services:
+  frontend:
+    image: oblivionx/3d-parallax
+    container_name: parallax-3d-frontend
+    ports:
+      - "3000:3000"
+    command: sh -c "npm install && npm run start"
+    restart: always
+  nginx-course:
+    image: nginx:latest
+    container_name: parallax-3d-nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    restart: always
+  jenkins-course:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-course
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+
+volumes:
+  jenkins_home:
